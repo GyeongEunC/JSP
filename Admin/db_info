@@ -1,0 +1,16 @@
+SQL> desc Employees;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ID                                        NOT NULL VARCHAR2(10)
+ PASS                                      NOT NULL VARCHAR2(10)
+ NAME                                               VARCHAR2(24)
+ LEV                                                CHAR(1)
+ ENTER                                              DATE
+ GENDER                                             CHAR(1)
+ PHONE                                              VARCHAR2(30)
+ 
+ EmployeesDAO에서 userCheck() 메서드의 result 값에 따라 관리자와 일반회원으로 로그인
+ result = 2; // 관리자로 로그인 성공
+ result = 3; // 일반회원으로 로그인 성공
+ 관리자와 일반회원으로 데이터를 입력받고 로그인과 로그아웃, 마이페이지에서 데이터수정 기능 구현
+ 관리자는 회원추가(custiomjoin)를 통해 사원데이터 추가 가능
