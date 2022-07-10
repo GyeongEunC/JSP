@@ -1,0 +1,16 @@
+SQL> desc movie;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ CODE                                      NOT NULL NUMBER(4)
+ TITLE                                              VARCHAR2(50)
+ PRICE                                              NUMBER(10)
+ DIRECTOR                                           VARCHAR2(20)
+ ACTOR                                              VARCHAR2(20)
+ POSTER                                             VARCHAR2(100)
+ SYNOPSIS                                           VARCHAR2(2000)
+ 
+ db명 : movie
+ 1씩 순차적으로 늘어나는 시퀸스 생성 후 code를 기준으로 movie 삽입, 조회, 수정, 삭제 기능 구현
+ *시퀸스 생성 : CREATE SEQUENCE movie_seq INCREMENT BY 1 START WITH 1;
+ 
+ 포스터 미삽입 시 지정해놓은 경로(upload 폴더)를 통해 기본이미지 삽입
