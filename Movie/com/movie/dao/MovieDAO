@@ -1,0 +1,127 @@
+package com.movie.dao;
+
+import java.sql.*;
+import java.util.*;
+
+import com.movie.dto.MovieVO;
+import util.DBManager;
+
+public class MovieDAO {
+	private MovieDAO() {
+		super();
+	}
+	private static MovieDAO instance = new MovieDAO();	// 싱글톤
+	
+	public static void setInstance(MovieDAO instance) {
+		MovieDAO.instance = instance;
+	}
+	public static MovieDAO getInstance() {
+		return instance;
+	}
+	
+	public ArrayList<MovieVO> selectAllMovie() {
+		String sql = "select * from movie order by code desc";
+		ArrayList<MovieVO> productList = new ArrayList<MovieVO>();
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		try {
+			conn = DBManager.getConnection();
+			psmt = conn.prepareStatement(sql);
+			rs = psmt.executeQuery();
+			while(rs.next()) {
+				MovieVO mVo = new MovieVO();
+				mVo.setCode(rs.getInt("code"));
+				mVo.setTitle(rs.getString("title"));
+				mVo.setPrice(rs.getInt("price"));
+				mVo.setDirector(rs.getString("director"));
+				mVo.setActor(rs.getString("actor"));
+				mVo.setPoster(rs.getString("poster"));
+				mVo.setSynopsis(rs.getString("synopsis"));
+				productList.add(mVo);
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+		} finally {
+			DBManager.close(rs, psmt, conn);
+		}
+		return productList;
+	}
+	
+	public void insertMovie(MovieVO mVo) {
+		String sql = "insert into movie values(movie_seq.nextval, ?, ?, ?, ?, ?, ?)";
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		try {
+			conn = DBManager.getConnection();
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, mVo.getTitle());
+			psmt.setInt(2, mVo.getPrice());
+			psmt.setString(3, mVo.getDirector());
+			psmt.setString(4, mVo.getActor());
+			psmt.setString(5, mVo.getSynopsis());
+			psmt.setString(6, mVo.getPoster());
+			psmt.executeUpdate(); // insert 실행
+		} catch (Exception e) {
+			System.out.println(e);
+		} finally {
+			DBManager.close(psmt, conn);
+		}
+	}
+	
+	public MovieVO selectMovieByCode(String code) {
+		String sql = "select * from movie where code=?";
+		MovieVO mVo = null;
+		try {
+			Connection conn = null;
+			PreparedStatement psmt = null;
+			ResultSet rs = null;
+			try {
+				conn = DBManager.getConnection();
+				psmt = conn.prepareStatement(sql);
+				psmt.setString(1, code);
+				rs = psmt.executeQuery();
+				if (rs.next()) {
+					mVo = new MovieVO();
+					mVo.setCode(rs.getInt("code"));
+					mVo.setTitle(rs.getString("title"));
+					mVo.setPrice(rs.getInt("price"));
+					mVo.setDirector(rs.getString("director"));
+					mVo.setActor(rs.getString("actor"));
+					mVo.setSynopsis(rs.getString("synopsis"));
+					mVo.setPoster(rs.getString("poster"));
+				}
+			} catch (Exception e) {
+				System.out.println(e);
+			} finally {
+				DBManager.close(rs, psmt, conn);
+			}
+
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return mVo;
+	}
+	
+	public void updateMovie(MovieVO mVo) {
+		String sql = "update movie set title=?, price=?, director=?, actor=?, synopsis=?, poster=? where code=?";
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		try {
+			conn = DBManager.getConnection();
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, mVo.getTitle());
+			psmt.setInt(2, mVo.getPrice());
+			psmt.setString(3, mVo.getDirector());
+			psmt.setString(4, mVo.getActor());
+			psmt.setString(5, mVo.getSynopsis());
+			psmt.setString(6, mVo.getPoster());
+			psmt.setInt(7, mVo.getCode());
+			psmt.executeUpdate();
+		} catch (Exception e) {
+			System.out.println(e);
+		} finally {
+			DBManager.close(psmt, conn);
+		}
+	}
+}
