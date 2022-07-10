@@ -1,0 +1,45 @@
+@charset "UTF-8";
+#wrap {
+	margin: 0 auto;		/* 가운데 정렬 */
+}
+
+h1 {
+	color: purple;
+}
+
+table {
+	width: 100%;
+	font-size: 12px;
+	line-height: 24px;	/* 줄간격 */
+	border-collapse: collapse;
+}
+
+table td, th {
+	border: #d3d3d3 solid 1px;
+	padding: 5px;
+}
+
+table.list td, th{
+	border: #d3d3d3 solid 1px;
+	padding: 5px;
+	text-align: center;
+}
+
+th {
+	background: skyblue;
+}
+
+a {
+	text-decoration: none;
+	color: black;
+}
+
+img {
+	width: 220px;
+	height: 300px;
+}
+
+a:hover {
+	text-decoration: underline;
+	color: purple;
+}
